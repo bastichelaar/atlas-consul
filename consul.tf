@@ -13,7 +13,7 @@ resource "aws_instance" "server" {
 
     ami = "${lookup(var.ami, concat(var.region, "-", var.platform))}"
     instance_type = "${var.instance_type}"
-    key_name = "${aws_key_pair.consul.key_name}"
+    key_name = "consul"
     count = "${var.servers}"
     security_groups = ["${aws_security_group.allow_all.id}"]
 
