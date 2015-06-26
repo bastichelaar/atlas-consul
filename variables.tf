@@ -1,10 +1,3 @@
-variable "access_key" {
-  default = "${env.ACCESS_KEY}"
-}
-variable "secret_key" {
-  default = "${env.SECRET_KEY}"
-}
-
 variable "private_key" {
     default = "ssh_keys/consul-key.pem"
 }
