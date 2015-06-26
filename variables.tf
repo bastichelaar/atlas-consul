@@ -1,3 +1,6 @@
+variable "access_key" {${ACCESS_KEY}}
+variable "secret_key" {${SECRET_KEY}}
+
 variable "private_key" {
     default = "ssh_keys/consul-key.pem"
 }
@@ -29,14 +32,6 @@ variable "ami" {
         us-east-1-centos6 = "ami-c2a818aa"
         us-west-2-centos6 = "ami-81d092b1"
     }
-}
-
-variable "key_name" {
-    description = "SSH key name in your AWS account for AWS instances."
-}
-
-variable "key_path" {
-    description = "Path to the private key specified by key_name."
 }
 
 variable "region" {
