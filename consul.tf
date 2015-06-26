@@ -1,12 +1,6 @@
 #--------------------------------------------------------------
 # Instance
 #--------------------------------------------------------------
-provider "aws" {
-    access_key = "${env.access_key}"
-    secret_key = "${env.secret_key}"
-    region = "${var.region}"
-}
-
 resource "aws_instance" "server" {
 
     subnet_id = "${aws_subnet.main.id}"
