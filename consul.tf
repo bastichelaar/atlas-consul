@@ -9,6 +9,7 @@ provider "aws" {
 
 resource "aws_instance" "server" {
 
+    subnet_id = "${aws_subnet.main.id}"
     security_groups = ["${aws_security_group.allow_all.id}"]
 
     ami = "${lookup(var.ami, concat(var.region, "-", var.platform))}"
@@ -55,16 +56,60 @@ resource "aws_instance" "server" {
 
 
 #--------------------------------------------------------------
+# VPC
+#--------------------------------------------------------------
+resource "aws_vpc" "main" {
+    cidr_block = "172.31.0.0/16"
+    enable_dns_hostnames = true
+}
+
+resource "aws_subnet" "main" {
+    vpc_id = "${aws_vpc.main.id}"
+    cidr_block = "172.31.0.0/20"
+    map_public_ip_on_launch = true
+}
+
+resource "aws_internet_gateway" "gw" {
+    vpc_id = "${aws_vpc.main.id}"
+}
+
+resource "aws_route_table" "r" {
+    vpc_id = "${aws_vpc.main.id}"
+    route {
+        cidr_block = "0.0.0.0/0"
+        gateway_id = "${aws_internet_gateway.gw.id}"
+    }
+}
+
+resource "aws_main_route_table_association" "a" {
+    vpc_id = "${aws_vpc.main.id}"
+    route_table_id = "${aws_route_table.r.id}"
+}
+
+#--------------------------------------------------------------
 # Security Group
 #--------------------------------------------------------------
 resource "aws_security_group" "allow_all" {
   name = "allow_all"
   description = "Allow all inbound traffic"
+  vpc_id = "${aws_vpc.main.id}"
+
+  egress {
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
+      cidr_blocks = ["0.0.0.0/0"]
+  }
 
   ingress {
       from_port = 0
-      to_port = 65535
-      protocol = "tcp"
+      to_port = 0
+      protocol = "-1"
       cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+resource "aws_key_pair" "consul" {
+    key_name = "consul"
+    public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQC5LNW47his4cUNaXj1Ma634p+uIN27yb+aWR7UN4DQ1PullYtt9VOF2Vsi5kHsKkEdgGgUMPtCGkqnweJLwn/TKnGtDUWLWP/uWZ/r6R9ccRuT7RXodXAjZl8bVOPlBQk278YivDLMdwuEv7keVeHUvUKOkKIqNX7hh/xe4bKicQ=="
 }
