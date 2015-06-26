@@ -1,5 +1,9 @@
-variable "access_key" {${ACCESS_KEY}}
-variable "secret_key" {${SECRET_KEY}}
+variable "access_key" {
+  default = ${ACCESS_KEY}
+}
+variable "secret_key" {
+  default = ${SECRET_KEY}
+}
 
 variable "private_key" {
     default = "ssh_keys/consul-key.pem"
