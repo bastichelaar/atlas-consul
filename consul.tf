@@ -68,6 +68,10 @@ resource "aws_security_group" "allow_all" {
       cidr_blocks = ["0.0.0.0/0"]
   }
 }
+resource "aws_key_pair" "consul" {
+#    key_name = "consul-key-pair"
+#    public_key = ""
+}
 
 resource "aws_key_pair" "consul" {
     key_name = "consul-key-pair"
