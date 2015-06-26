@@ -71,5 +71,5 @@ resource "aws_security_group" "allow_all" {
 
 resource "aws_key_pair" "consul" {
     key_name = "consul-key-pair"
-    public_key = "${file(var.public_key)}"
+    public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQC5LNW47his4cUNaXj1Ma634p+uIN27yb+aWR7UN4DQ1PullYtt9VOF2Vsi5kHsKkEdgGgUMPtCGkqnweJLwn/TKnGtDUWLWP/uWZ/r6R9ccRuT7RXodXAjZl8bVOPlBQk278YivDLMdwuEv7keVeHUvUKOkKIqNX7hh/xe4bKicQ=="
 }
