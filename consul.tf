@@ -2,8 +2,8 @@
 # Instance
 #--------------------------------------------------------------
 provider "aws" {
-    access_key = "${var.aws_access_key}"
-    secret_key = "${var.aws_secret_key}"
+    access_key = "${env.access_key}"
+    secret_key = "${env.secret_key}"
     region = "${var.region}"
 }
 
