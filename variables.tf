@@ -1,3 +1,7 @@
+variable "aws_region" {}
+variable "aws_secret_key" {}
+variable "aws_access_key" {}
+
 variable "private_key" {
     default = "ssh_keys/consul-key.pem"
 }
