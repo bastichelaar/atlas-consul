@@ -1,8 +1,8 @@
 variable "access_key" {
-  default = ${ACCESS_KEY}
+  default = "${env.ACCESS_KEY}"
 }
 variable "secret_key" {
-  default = ${SECRET_KEY}
+  default = "${env.SECRET_KEY}"
 }
 
 variable "private_key" {
