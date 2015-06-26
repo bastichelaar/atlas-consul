@@ -9,7 +9,6 @@ provider "aws" {
 
 resource "aws_instance" "server" {
 
-    subnet_id = "${aws_subnet.main.id}"
     security_groups = ["${aws_security_group.allow_all.id}"]
 
     ami = "${lookup(var.ami, concat(var.region, "-", var.platform))}"
