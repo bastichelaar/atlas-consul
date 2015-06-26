@@ -8,13 +8,13 @@ resource "aws_instance" "server" {
 
     ami = "${lookup(var.ami, concat(var.region, "-", var.platform))}"
     instance_type = "${var.instance_type}"
-    key_name = "${var.key_name}"
+    key_name = "${aws_key_pair.consul.key_name}"
     count = "${var.servers}"
     security_groups = ["${aws_security_group.allow_all.id}"]
 
     connection {
         user = "${lookup(var.user, var.platform)}"
-        key_file = "${var.key_path}"
+        key_file = "${var.private_key}"
     }
 
     #Instance tags
@@ -94,4 +94,9 @@ resource "aws_route_table" "r" {
 resource "aws_main_route_table_association" "a" {
     vpc_id = "${aws_vpc.main.id}"
     route_table_id = "${aws_route_table.r.id}"
+}
+
+resource "aws_key_pair" "consul" {
+    key_name = "consul-key-pair"
+    public_key = "${file(var.public_key)}"
 }

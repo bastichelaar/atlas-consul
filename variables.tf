@@ -1,3 +1,10 @@
+variable "private_key" {
+    default = "ssh_keys/consul-key.pem"
+}
+variable "public_key" {
+    default = "ssh_keys/consul-key.pub"
+}
+
 variable "platform" {
     default = "ubuntu"
     description = "The OS Platform"
